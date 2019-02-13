@@ -321,11 +321,6 @@ namespace VstsDemoBuilder.Controllers
         {
             try
             {
-                string isCode = Request.QueryString["code"];
-                if (isCode == null)
-                {
-                    return Redirect("../Account/Verify");
-                }
                 if (Session["visited"] != null)
                 {
                     if (Session["templateName"] != null && Session["templateName"].ToString() != "")

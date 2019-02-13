@@ -19,5 +19,9 @@ namespace VstsDemoBuilder.Models
         public string name { get; set; }
 
         public string EnableExtractor { get; set; }
+        public string TFSserverName { get; set; }
+        public string Collection { get; set; }
+        public string Port { get; set; }
+        public string Template { get; set; }
     }
 }

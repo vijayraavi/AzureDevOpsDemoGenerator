@@ -1,6 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using VstsDemoBuilder.Models;
+using VstsRestAPI;
+using VstsRestAPI.ProjectsAndTeams;
 
 namespace VstsDemoBuilder.Controllers
 {
@@ -17,12 +22,6 @@ namespace VstsDemoBuilder.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Verify View
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Verify(LoginModel model, string id)
@@ -38,7 +37,7 @@ namespace VstsDemoBuilder.Controllers
             {
                 return RedirectToAction("Unsupported_browser", "Account");
             }
-            
+
             try
             {
                 if (!string.IsNullOrEmpty(model.name))
@@ -68,7 +67,6 @@ namespace VstsDemoBuilder.Controllers
                         }
                     }
                 }
-
                 if (!string.IsNullOrEmpty(model.Event))
                 {
                     string eventsTemplate = Server.MapPath("~") + @"\Templates\Events.json";
@@ -90,6 +88,74 @@ namespace VstsDemoBuilder.Controllers
             catch { }
             return View(model);
         }
+
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public ActionResult Verify(LoginModel model, string id)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrEmpty(model.Event))
+        //        {
+        //            string eventsTemplate = Server.MapPath("~") + @"\Templates\Events.json";
+        //            if (System.IO.File.Exists(eventsTemplate))
+        //            {
+        //                string eventContent = System.IO.File.ReadAllText(eventsTemplate);
+        //                var jItems = JObject.Parse(eventContent);
+        //                if (jItems[model.Event] != null)
+        //                {
+        //                    model.Event = jItems[model.Event].ToString();
+        //                }
+        //                else
+        //                {
+        //                    model.Event = string.Empty;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch { }
+
+        //    return View(model);
+        //}
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Verify(LoginModel model)
+        {
+            try
+            {
+
+                string _credentials = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", "", model.PAT)));
+                Configuration _inputConfiguration = new Configuration() { UriString = string.Format("http://{0}:{1}/{2}/", model.TFSserverName, model.Port, model.Collection), VersionNumber = "4.1", PersonalAccessToken = model.PAT };
+
+                Projects objProject = new Projects(_inputConfiguration);
+                bool isAccountValid = objProject.IsAccountHasProjects();
+                if (isAccountValid)
+                {
+                    string TFSUriString = string.Format("http://{0}:{1}/{2}/", model.TFSserverName, model.Port, model.Collection);
+                    Session["TFSUriString"] = TFSUriString;
+                    Session["PAT"] = model.PAT;
+
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, TFSUriString, DateTime.Now, DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes), false, model.PAT, FormsAuthentication.FormsCookiePath);
+                    string cookie = FormsAuthentication.Encrypt(ticket);
+                    HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookie);
+                    ck.Path = FormsAuthentication.FormsCookiePath;
+                    Response.Cookies.Add(ck);
+                    Session["visited"] = 1;
+                    return RedirectToAction("Create", "Environment", new { SelectedTemplate = model.Template, TFSserverName = model.TFSserverName, Port = model.Port, Collection = model.Collection });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                model.Message = "LoginFailed: " + ex.Message;
+                return RedirectToAction("Verify", new { Message = model.Message, id = string.Empty });
+            }
+
+            model.Message = "Invalid PAT";
+            return RedirectToAction("Verify", new { Message = model.Message });
+        }
+
 
         /// <summary>
         /// Get Account at the end of project provision

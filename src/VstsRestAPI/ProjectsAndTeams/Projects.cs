@@ -28,7 +28,7 @@ namespace VstsRestAPI.ProjectsAndTeams
                 // connect to the REST endpoint            
                 HttpResponseMessage response = client.GetAsync("_apis/projects?stateFilter=All&api-version=" + _configuration.VersionNumber).Result;
                 // check to see if we have a succesfull respond
-                return response.StatusCode == System.Net.HttpStatusCode.OK;
+                return response.IsSuccessStatusCode;
             }
             // return false;
         }
