@@ -166,7 +166,6 @@ namespace VstsDemoBuilder.Controllers
             string groupDetails = "";
             TemplateSelection.Templates templates = new TemplateSelection.Templates();
             string templatesPath = ""; templatesPath = Server.MapPath("~") + @"\Templates\";
-            string email = Session["Email"].ToString();
             if (System.IO.File.Exists(templatesPath + "TemplateSetting.json"))
             {
                 groupDetails = System.IO.File.ReadAllText(templatesPath + @"\TemplateSetting.json");
@@ -223,42 +222,18 @@ namespace VstsDemoBuilder.Controllers
 
                     if (Session["PAT"] != null)
                     {
-                        AccessDetails.access_token = Session["PAT"].ToString();
-                        ProfileDetails profile = GetProfile(AccessDetails);
-                        Session["User"] = profile.displayName;
-                        Session["Email"] = profile.emailAddress.ToLower();
-                        Models.AccountsResponse.AccountList accountList = GetAccounts(profile.id, AccessDetails);
-
-                        //New Feature Enabling
-                        model.accessToken = AccessDetails.access_token;
-                        model.refreshToken = AccessDetails.refresh_token;
-                        Session["PAT"] = AccessDetails.access_token;
-                        model.Email = profile.emailAddress.ToLower();
-                        model.Name = profile.displayName;
-                        model.MemberID = profile.id;
-                        List<string> accList = new List<string>();
-                        if (accountList.count > 0)
-                        {
-                            foreach (var account in accountList.value)
-                            {
-                                accList.Add(account.accountName);
-                            }
-                            accList.Sort();
-                            model.accountsForDropdown = accList;
-                            model.hasAccount = true;
-                        }
-                        else
-                        {
-                            model.accountsForDropdown.Add("Select Organization");
-                            ViewBag.AccDDError = "Could not load your organizations. Please change the directory in profile page of Azure DevOps Organization and try again.";
-                        }
+                        string token = Session["PAT"].ToString();
+                        string collection = Session["Collection"].ToString();
+                        string TFSUriString=Session["TFSUriString"].ToString();
+                        model.accessToken = token;
+                        model.accountName = collection;
+                        model.TfsUrl = TFSUriString;
 
                         model.SupportEmail = System.Configuration.ConfigurationManager.AppSettings["SupportEmail"];
                         model.Templates = new List<string>();
                         model.accountUsersForDdl = new List<SelectListItem>();
                         TemplateSelection.Templates templates = new TemplateSelection.Templates();
                         string[] dirTemplates = Directory.GetDirectories(Server.MapPath("~") + @"\Templates");
-
                         //Taking all the template folder and adding to list
                         foreach (string template in dirTemplates)
                         {
@@ -327,17 +302,6 @@ namespace VstsDemoBuilder.Controllers
                     {
                         model.TemplateName = Session["templateName"].ToString();
                     }
-                    string code = Request.QueryString["code"];
-
-                    string redirectUrl = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
-                    string clientId = System.Configuration.ConfigurationManager.AppSettings["ClientSecret"];
-                    string accessRequestBody = GenerateRequestPostData(clientId, code, redirectUrl);
-                    AccessDetails = GetAccessToken(accessRequestBody);
-
-                    // add your access token here for local debugging
-                    //AccessDetails.access_token = "";
-                    model.accessToken = AccessDetails.access_token;
-                    Session["PAT"] = AccessDetails.access_token;
                     return RedirectToAction("CreateProject", "Environment");
                 }
                 else
@@ -779,6 +743,7 @@ namespace VstsDemoBuilder.Controllers
         {
             Session["PAT"] = model.accessToken;
             Session["AccountName"] = model.accountName;
+            Session["TFSUriString"] = model.TfsUrl;
             AddMessage(model.id, string.Empty);
             AddMessage(model.id.ErrorId(), string.Empty);
 
@@ -842,6 +807,7 @@ namespace VstsDemoBuilder.Controllers
         /// <returns></returns>
         public string[] CreateProjectEnvironment(Project model, string pat, string accountName)
         {
+
             pat = model.accessToken;
             //define versions to be use
             string projectCreationVersion = System.Configuration.ConfigurationManager.AppSettings["ProjectCreationVersion"];
@@ -890,21 +856,21 @@ namespace VstsDemoBuilder.Controllers
             }
             //configuration setup
             string _credentials = model.accessToken;
-            Configuration _projectCreationVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = projectCreationVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _releaseVersion = new Configuration() { UriString = releaseHost + accountName + "/", VersionNumber = releaseVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _buildVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = buildVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _workItemsVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = workItemsVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _queriesVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = queriesVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _boardVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = boardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _wikiVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = wikiVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _endPointVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = endPointVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _extensionVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = extensionVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _dashboardVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = dashboardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _repoVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = repoVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _projectCreationVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = projectCreationVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _releaseVersion = new Configuration() { UriString = releaseHost +  "/", VersionNumber = releaseVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _buildVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = buildVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _workItemsVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = workItemsVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _queriesVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = queriesVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _boardVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = boardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _wikiVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = wikiVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _endPointVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = endPointVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _extensionVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = extensionVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _dashboardVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = dashboardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _repoVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = repoVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
 
-            Configuration _getSourceCodeVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = getSourceCodeVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _agentQueueVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = agentQueueVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _testPlanVersion = new Configuration() { UriString = defaultHost + accountName + "/", VersionNumber = testPlanVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _getSourceCodeVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = getSourceCodeVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _agentQueueVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = agentQueueVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _testPlanVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = testPlanVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
 
 
             string templatesFolder = Server.MapPath("~") + @"\Templates\";

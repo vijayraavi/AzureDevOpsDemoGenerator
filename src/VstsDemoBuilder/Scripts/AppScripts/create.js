@@ -443,7 +443,7 @@ $(document).ready(function (event) {
         }
     });
 
-  
+
     var privateTemplateDescription = $('#selectedTemplateDescription').val();
     if (privateTemplateDescription !== "") {
         var templateTxt = $('#descContainer').text();
@@ -473,9 +473,9 @@ $('#btnSubmit').click(function () {
 
     var projectName = $.trim($("#txtProjectName").val());
     var template = templateFolder;
-    var accountName = $('#ddlAcccountName option:selected').val();
+    var accountName = $('#ddlAcccountName').val();
     var token = $('#hiddenAccessToken').val();
-    var email = $('#emailID').val();
+    var TfsUrl = $('#TfsUrl').val();
     var regex = /^[A-Za-z0-9 -_]*[A-Za-z0-9][A-Za-z0-9 -_]*$/;
     if (accountName === "" || accountName === "Select Organiaztion") {
         $("#ddlAcccountName_Error").text("Please choose an organization first!");
@@ -559,7 +559,9 @@ $('#btnSubmit').click(function () {
     });
     selectedTemplate = template;
     var websiteUrl = window.location.href;
-    var projData = { "ProjectName": projectName, "SelectedTemplate": template, "id": uniqueId, "Parameters": Parameters, "selectedUsers": SelectedUsers, "UserMethod": userMethod, "SonarQubeDNS": ServerDNS, "isExtensionNeeded": isExtensionNeeded, "isAgreeTerms": isAgreedTerms, "websiteUrl": websiteUrl, "accountName": accountName, "accessToken": token, "email": email };
+    var projData = {
+        "ProjectName": projectName, "SelectedTemplate": template, "id": uniqueId, "isExtensionNeeded": isExtensionNeeded, "isAgreeTerms": isAgreedTerms, "accountName": accountName, "accessToken": token, "TfsUrl": TfsUrl
+    };
     $.post("StartEnvironmentSetupProcess", projData, function (data) {
 
         if (data !== "True") {
@@ -860,7 +862,7 @@ function GetRequiredExtension() {
 
 //TEMPLATE GROUP CREATION
 $(document).ready(function () {
- 
+
 });
 
 $(function () {

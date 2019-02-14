@@ -35,13 +35,14 @@ namespace VstsDemoBuilder.Models
         public string refreshToken { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
-        public List<string> accountsForDropdown { get; set; }
+        public string accountsForDropdown { get; set; }
         public string accountName { get; set; }
         public bool hasAccount { get; set; }
         public string selectedTemplateDescription { get; set; }
         public string selectedTemplateFolder { get; set; }
         public string Message { get; set; }
         public string EnableExtractor { get; set; }
+        public string TfsUrl { get; set; }
 
     }
     public class EnvironmentValues

@@ -63,8 +63,8 @@
     <input type="hidden" id="hidnUID" />
     @Html.HiddenFor(model => model.IsAuthenticated, new { id = "hidIsAuthenticated" })
     @Html.HiddenFor(model => model.accessToken, new { id = "hiddenAccessToken" })
-    @Html.HiddenFor(model => model.MemberID, new { id = "hiddenMemberID" })
-    @Html.HiddenFor(model => model.Email, new { id = "emailID" })
+    @Html.HiddenFor(model => model.TfsUrl, new { id = "TfsUrl" })
+    @Html.HiddenFor(model => model.accountName, new { id = "accountName" })
     @if (!string.IsNullOrEmpty(Model.selectedTemplateDescription))
     {
         <input type="hidden" value="@Model.selectedTemplateDescription" id="selectedTemplateDescription" />
@@ -195,10 +195,10 @@
             -->
             <div class="col-md-6 order-1 order-md-2">
                 <div class="form-group row">
-                    <label for="ddlAcccountName" class="col-lg-3 col-form-label" style="font-weight: 400;">Select Organization :</label>
+                    <label for="ddlAcccountName" class="col-lg-3 col-form-label" style="font-weight: 400;">Selected Collection :</label>
                     <div class="col-lg-8">
 
-                        @Html.DropDownListFor(model => model.accountName, new SelectList(Model.accountsForDropdown), "Select Organization", new { @class = "form-control rmverror", id = "ddlAcccountName", name = "accountName", style = "cursor:pointer" })
+                        @Html.TextBoxFor(model => model.accountName, new { @class = "form-control rmverror", id = "ddlAcccountName", name = "accountName", style = "cursor:pointer", disabled = "disbaled" })
                         <div class="alert alert-danger d-none" role="alert" id="ddlAcccountName_Error">
                         </div>
                         <div style="color:red">

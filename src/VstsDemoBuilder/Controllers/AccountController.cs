@@ -135,7 +135,7 @@ namespace VstsDemoBuilder.Controllers
                     string TFSUriString = string.Format("http://{0}:{1}/{2}/", model.TFSserverName, model.Port, model.Collection);
                     Session["TFSUriString"] = TFSUriString;
                     Session["PAT"] = model.PAT;
-
+                    Session["Collection"] = model.Collection;
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, TFSUriString, DateTime.Now, DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes), false, model.PAT, FormsAuthentication.FormsCookiePath);
                     string cookie = FormsAuthentication.Encrypt(ticket);
                     HttpCookie ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookie);

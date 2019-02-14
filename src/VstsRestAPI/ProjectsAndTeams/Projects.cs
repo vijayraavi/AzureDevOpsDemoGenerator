@@ -67,7 +67,7 @@ namespace VstsRestAPI.ProjectsAndTeams
                 var jsonContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var method = new HttpMethod("POST");
 
-                var request = new HttpRequestMessage(method, "_apis/projects?api-version=" + _configuration.VersionNumber) { Content = jsonContent };
+                var request = new HttpRequestMessage(method, _configuration.UriString + "_apis/projects?api-version=" + _configuration.VersionNumber) { Content = jsonContent };
                 var response = client.SendAsync(request).Result;
                 if (response.IsSuccessStatusCode && response.StatusCode == System.Net.HttpStatusCode.Accepted)
                 {
