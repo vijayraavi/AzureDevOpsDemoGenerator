@@ -240,11 +240,11 @@
     "quality": "definition",
     "drafts": [],
     "queue": {
-        "name": "Hosted VS2017",
-        "pool": {
-            "name": "Hosted VS2017",
-            "isHosted": true
-        }
+        "name": "Default",
+      "pool": {
+        "name": "Default",
+        "isHosted": true
+      }
     },
     "name": "PartsUnlimitedE2E",
     "path": "\\",

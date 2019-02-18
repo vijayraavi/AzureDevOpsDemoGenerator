@@ -273,7 +273,7 @@
         "condition": "succeeded()",
         "target": {
           "queue": {
-            "id": "$Hosted VS2017$",
+            "id": "",
             "pool": null
           },
           "executionOptions": {
@@ -466,9 +466,9 @@
   "quality": "definition",
   "drafts": [],
   "queue": {
-    "name": "Hosted VS2017",
+    "name": "",
     "pool": {
-      "name": "Hosted VS2017",
+      "name": "",
       "isHosted": true
     }
   }

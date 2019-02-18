@@ -65,6 +65,8 @@
     @Html.HiddenFor(model => model.accessToken, new { id = "hiddenAccessToken" })
     @Html.HiddenFor(model => model.TfsUrl, new { id = "TfsUrl" })
     @Html.HiddenFor(model => model.accountName, new { id = "accountName" })
+    @Html.HiddenFor(model => model.Port, new { id = "Port" })
+    @Html.HiddenFor(model => model.TfsServerName, new { id = "TfsServerName" })
     @if (!string.IsNullOrEmpty(Model.selectedTemplateDescription))
     {
         <input type="hidden" value="@Model.selectedTemplateDescription" id="selectedTemplateDescription" />

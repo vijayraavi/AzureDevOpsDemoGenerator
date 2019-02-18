@@ -64,7 +64,7 @@
             "artifactsDownloadInput": {
               "downloadInputs": []
             },
-            "queueId": "$Hosted$",
+            "queueId": "",
             "demands": [],
             "enableAccessToken": false,
             "timeoutInMinutes": 0,
@@ -134,7 +134,7 @@
           ]
         }
       ],
-      "queueId": "$Hosted$",
+      "queueId": "",
       "environmentOptions": {
         "emailNotificationType": "OnlyOnFailure",
         "emailRecipients": "release.environment.owner;release.creator",
@@ -210,7 +210,7 @@
             "artifactsDownloadInput": {
               "downloadInputs": []
             },
-            "queueId": "$Hosted$",
+            "queueId": "",
             "demands": [],
             "enableAccessToken": false,
             "timeoutInMinutes": 0,
@@ -312,7 +312,7 @@
           ]
         }
       ],
-      "queueId": "$Hosted$",
+      "queueId": "",
       "environmentOptions": {
         "emailNotificationType": "OnlyOnFailure",
         "emailRecipients": "release.environment.owner;release.creator",
@@ -388,7 +388,7 @@
             "artifactsDownloadInput": {
               "downloadInputs": []
             },
-            "queueId": "$Hosted$",
+            "queueId": "",
             "demands": [],
             "enableAccessToken": false,
             "timeoutInMinutes": 0,
@@ -458,7 +458,7 @@
           ]
         }
       ],
-      "queueId": "$Hosted$",
+      "queueId": "",
       "environmentOptions": {
         "emailNotificationType": "OnlyOnFailure",
         "emailRecipients": "release.environment.owner;release.creator",

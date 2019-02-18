@@ -34,14 +34,10 @@ namespace VstsRestAPI.WorkItemAndTracking
         }
 
         // Create Report work items
-        public void CreateReportWI(string credential, string version, string url, string websiteUrl, string reportName, string accountName, string templateName, string projectId, string region)
+        public void CreateReportWI(string credential, string version, string url, string websiteUrl, string reportName, string accountName, string templateName, string projectId)
         {
             try
             {
-                if (string.IsNullOrEmpty(region))
-                {
-                    region = "";
-                }
 
                 Object[] ReportPatchDocument = new Object[5];
 
@@ -49,7 +45,6 @@ namespace VstsRestAPI.WorkItemAndTracking
                 ReportPatchDocument[1] = new { op = "add", path = "/fields/CustomAgile.SiteName", value = websiteUrl };
                 ReportPatchDocument[2] = new { op = "add", path = "/fields/CustomAgile.AccountName", value = accountName };
                 ReportPatchDocument[3] = new { op = "add", path = "/fields/CustomAgile.TemplateName", value = templateName };
-                ReportPatchDocument[4] = new { op = "add", path = "/fields/CustomAgile.Region", value = region };
 
                 con.UriString = url;
                 con.PersonalAccessToken = credential;

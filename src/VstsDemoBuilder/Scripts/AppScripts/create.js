@@ -476,6 +476,8 @@ $('#btnSubmit').click(function () {
     var accountName = $('#ddlAcccountName').val();
     var token = $('#hiddenAccessToken').val();
     var TfsUrl = $('#TfsUrl').val();
+    var Port = $('#Port').val();
+    var TfsServerName = $('#TfsServerName').val();
     var regex = /^[A-Za-z0-9 -_]*[A-Za-z0-9][A-Za-z0-9 -_]*$/;
     if (accountName === "" || accountName === "Select Organiaztion") {
         $("#ddlAcccountName_Error").text("Please choose an organization first!");
@@ -560,7 +562,7 @@ $('#btnSubmit').click(function () {
     selectedTemplate = template;
     var websiteUrl = window.location.href;
     var projData = {
-        "ProjectName": projectName, "SelectedTemplate": template, "id": uniqueId, "isExtensionNeeded": isExtensionNeeded, "isAgreeTerms": isAgreedTerms, "accountName": accountName, "accessToken": token, "TfsUrl": TfsUrl
+        "ProjectName": projectName, "SelectedTemplate": template, "id": uniqueId, "isExtensionNeeded": isExtensionNeeded, "isAgreeTerms": isAgreedTerms, "accountName": accountName, "accessToken": token, "TfsUrl": TfsUrl, "Port": Port, "TfsServerName": TfsServerName
     };
     $.post("StartEnvironmentSetupProcess", projData, function (data) {
 
@@ -713,9 +715,10 @@ function getStatus() {
                                 type: "GET",
                                 async: false,
                                 success: function (data) {
-                                    var accountName = $('#ddlAcccountName option:selected').val();
+                                    var tfsUrl = $('#TfsUrl').val();
+                                    var accountName = $('#ddlAcccountName').val();
                                     var projectNameForLink = $("#txtProjectName").val();
-                                    var link = "https://dev.azure.com/" + accountName + "/" + projectNameForLink;
+                                    var link = tfsUrl + "/" + projectNameForLink;
                                     var proceedOrg = "<a href='" + link + "' target='_blank'><button type = 'button' class='btn btn-primary btn-sm' id = 'proceedOrg' style = 'margin: 5px;'> Navigate to project</button></a>";
                                     var social = "<p style='color: black; font-weight: 500; margin: 0px;'>Like the tool? Share your feedback &nbsp;";
                                     social += "<script>function fbs_click() { u = 'https://azuredevopsdemogenerator.azurewebsites.net/'; t = +Azure + DevOps + Demo + Generator & window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436'); return false; }</script>";

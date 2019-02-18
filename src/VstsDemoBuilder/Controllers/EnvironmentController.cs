@@ -224,10 +224,14 @@ namespace VstsDemoBuilder.Controllers
                     {
                         string token = Session["PAT"].ToString();
                         string collection = Session["Collection"].ToString();
-                        string TFSUriString=Session["TFSUriString"].ToString();
+                        string TFSUriString = Session["TFSUriString"].ToString();
+                        string tfsServerName = Session["ServerName"].ToString();
+                        string port = Session["Port"].ToString();
                         model.accessToken = token;
                         model.accountName = collection;
                         model.TfsUrl = TFSUriString;
+                        model.TfsServerName = tfsServerName;
+                        model.Port = port;
 
                         model.SupportEmail = System.Configuration.ConfigurationManager.AppSettings["SupportEmail"];
                         model.Templates = new List<string>();
@@ -744,6 +748,9 @@ namespace VstsDemoBuilder.Controllers
             Session["PAT"] = model.accessToken;
             Session["AccountName"] = model.accountName;
             Session["TFSUriString"] = model.TfsUrl;
+            Session["Port"] = model.Port;
+            Session["ServerName"] = model.TfsServerName;
+
             AddMessage(model.id, string.Empty);
             AddMessage(model.id.ErrorId(), string.Empty);
 
@@ -852,21 +859,21 @@ namespace VstsDemoBuilder.Controllers
                 string projectId = System.Configuration.ConfigurationManager.AppSettings["PROJECTID"];
                 string reportName = string.Format("{0}", "AzureDevOps_Analytics-DemoGenerator");
                 IssueWI objIssue = new IssueWI();
-                objIssue.CreateReportWI(patBase64, "1.0", url, websiteUrl, reportName, "", templateUsed, projectId, model.Region);
+                objIssue.CreateReportWI(patBase64, "1.0", url, websiteUrl, reportName, "", templateUsed, projectId);
             }
             //configuration setup
             string _credentials = model.accessToken;
             Configuration _projectCreationVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = projectCreationVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _releaseVersion = new Configuration() { UriString = releaseHost +  "/", VersionNumber = releaseVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _buildVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = buildVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _workItemsVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = workItemsVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _queriesVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = queriesVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _boardVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = boardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _wikiVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = wikiVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _endPointVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = endPointVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _releaseVersion = new Configuration() { UriString = string.Format("http://{0}:{1}/{2}/", model.TfsServerName, model.Port, model.accountName), VersionNumber = releaseVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _buildVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = buildVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _workItemsVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = workItemsVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _queriesVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = queriesVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _boardVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = boardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _wikiVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = wikiVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _endPointVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = endPointVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
             Configuration _extensionVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = extensionVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _dashboardVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = dashboardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _repoVersion = new Configuration() { UriString = model.TfsUrl +  "/", VersionNumber = repoVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _dashboardVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = dashboardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _repoVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = repoVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
 
             Configuration _getSourceCodeVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = getSourceCodeVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
             Configuration _agentQueueVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = agentQueueVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };

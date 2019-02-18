@@ -29,7 +29,6 @@ namespace VstsDemoBuilder.Models
         public bool isAgreeTerms { get; set; }
 
         public string websiteUrl { get; set; }
-        public string Region { get; set; }
 
         public string accessToken { get; set; }
         public string refreshToken { get; set; }
@@ -43,6 +42,8 @@ namespace VstsDemoBuilder.Models
         public string Message { get; set; }
         public string EnableExtractor { get; set; }
         public string TfsUrl { get; set; }
+        public string TfsServerName { get; set; }
+        public string Port { get; set; }
 
     }
     public class EnvironmentValues

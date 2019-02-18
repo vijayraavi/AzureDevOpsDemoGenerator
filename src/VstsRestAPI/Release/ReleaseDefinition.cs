@@ -25,7 +25,7 @@ namespace VstsRestAPI.Release
                 var jsonContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var method = new HttpMethod("POST");
 
-                var request = new HttpRequestMessage(method, project + "/_apis/release/definitions?api-version=" + _configuration.VersionNumber) { Content = jsonContent };
+                var request = new HttpRequestMessage(method, _configuration.UriString + project + "/_apis/release/definitions?api-version=4.0-preview.3") { Content = jsonContent };
                 var response = client.SendAsync(request).Result;
 
                 if (response.IsSuccessStatusCode)

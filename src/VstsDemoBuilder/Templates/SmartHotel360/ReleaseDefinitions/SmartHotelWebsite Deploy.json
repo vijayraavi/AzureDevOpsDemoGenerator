@@ -68,7 +68,7 @@
             "artifactsDownloadInput": {
               "downloadInputs": []
             },
-            "queueId": "$Hosted VS2017$",
+            "queueId": "Default",
             "demands": [],
             "enableAccessToken": false,
             "timeoutInMinutes": 0,
