@@ -16,15 +16,7 @@
           "Description": "This template contains work items, code and pipeline definitions for the public web site of SmartHotel360, an E2E reference sample app with several consumer and line-of-business apps and an Azure backend. For more information, please see the project page on <a href='https://github.com/Microsoft/SmartHotel360' target='_blank'>GitHub</a>",
           "Tags": [ "Scrum", "aspnetcore", "azureappservice" ],
           "Image": "/Templates/TemplateImages/SmartHotel.png",
-          "Message": "Note that the code for the SmartHotel 360 Website hosted on <a href='https://github.com/Microsoft/SmartHotel360-Website' target='_blank'>GitHub</a> is not imported into Azure Repos. The CI pipeline just points to the code on GitHub"
-        },
-        {
-          "Key": "77380",
-          "Name": "MyHealthClinic",
-          "TemplateFolder": "MyHealthClinic",
-          "Description": "This template provisions a scrum based team project with code, work items for a  sample ASP.NET Core web application-My Health Clinic. The template also includes pipeline definition to build and deploy the web app to Azure App Service.",
-          "Tags": [ "Scrum", "aspnetcore", "azureappservice" ],
-          "Image": "/Templates/TemplateImages/MyHealthClinic.png"
+          "Message": "Note that the code for the SmartHotel 360 Website hosted on <a href='https://github.com/Microsoft/SmartHotel360-Website' target='_blank'>GitHub</a> is not imported into Azure Repos. The CI pipeline just points to the code on GitHub. <br /> Template required follwoing extensions, please install those before you use this template, ignore if already done.<ul><li><a href='https://marketplace.visualstudio.com/items?itemName=keesschollaart.arm-outputs' target='_blank'><b>ARM Outputs</b></a></li><li><a href='https://marketplace.visualstudio.com/items?itemName=keesschollaart.arm-outputs' target='_blank'><b>ARM Outputs</b></a></li><li><a href='https://marketplace.visualstudio.com/items?itemName=ms-devlabs.TeamProjectHealth' target='_blank'><b>Team Project Health</b></a></li>"
         },
         {
           "Key": "77379",
@@ -32,7 +24,8 @@
           "TemplateFolder": "PartsUnlimited",
           "Description": "Use this lab to provision a scrum based team project containing sample work items, complete source code and pipeline definitions to deploy Parts Unlimited, a sample eCommerce website based on the The Phoenix Project book by Gene Kim. See the home page of the project on <a href='https://github.com/Microsoft/PartsUnlimited' target='_blank'>GitHub</a> ",
           "Tags": [ "Scrum", "aspdotnet", "azureappservice" ],
-          "Image": "/Templates/TemplateImages/Partunlimited.png"
+          "Image": "/Templates/TemplateImages/Partunlimited.png",
+          "Message": "Source code is on <a href='https://github.com/Microsoft/PartsUnlimited' target='_blank'>GitHub</a>"
         }
       ]
     }

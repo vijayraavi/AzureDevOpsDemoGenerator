@@ -1,6 +1,6 @@
 ﻿@model VstsDemoBuilder.Models.Project
 @{
-    ViewBag.Title = "Azure DevOps Demo Generator";
+    ViewBag.Title = "Azure DevOps Server Demo Generator";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -131,14 +131,14 @@
         <a class="navbar-brand p-0 mr-auto" href="../Account/Verify">
             <img src="~/content/assets/images/VS_logo.png" alt="">
             <span class="navbar-brand-text ml-1">
-                Azure DevOps Demo Generator
+                Azure DevOps Server Demo Generator
             </span>
         </a>
         <ul class="navbar-nav">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">
-                    <img src="~/content/assets/images/VSTS-user-image.svg" alt="Azure DevOps Demo Generator">
+                    <img src="~/content/assets/images/VSTS-user-image.svg" alt="Azure DevOps Server Demo Generator">
                     @if (Session["User"] != null)
                     {
                         <span class="VSTS-username ml-1" style="font-size:16px">@Session["User"].ToString()</span>

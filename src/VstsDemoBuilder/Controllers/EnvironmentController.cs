@@ -864,7 +864,7 @@ namespace VstsDemoBuilder.Controllers
             //configuration setup
             string _credentials = model.accessToken;
             Configuration _projectCreationVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = projectCreationVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _releaseVersion = new Configuration() { UriString = string.Format("http://{0}:{1}/{2}/", model.TfsServerName, model.Port, model.accountName), VersionNumber = releaseVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _releaseVersion = new Configuration() { UriString = model.TfsUrl, VersionNumber = releaseVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
             Configuration _buildVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = buildVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
             Configuration _workItemsVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = workItemsVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
             Configuration _queriesVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = queriesVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
@@ -875,9 +875,9 @@ namespace VstsDemoBuilder.Controllers
             Configuration _dashboardVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = dashboardVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
             Configuration _repoVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = repoVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
 
-            Configuration _getSourceCodeVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = getSourceCodeVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _agentQueueVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = agentQueueVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
-            Configuration _testPlanVersion = new Configuration() { UriString = model.TfsUrl + accountName + "/", VersionNumber = testPlanVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _getSourceCodeVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = getSourceCodeVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _agentQueueVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = agentQueueVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
+            Configuration _testPlanVersion = new Configuration() { UriString = model.TfsUrl + "/", VersionNumber = testPlanVersion, PersonalAccessToken = pat, Project = model.ProjectName, AccountName = accountName };
 
 
             string templatesFolder = Server.MapPath("~") + @"\Templates\";
@@ -1241,10 +1241,6 @@ namespace VstsDemoBuilder.Controllers
             //Create Pull request
             Thread.Sleep(10000); //Adding delay to wait for the repository to create and import from the source
 
-            //Create WIKI
-            CreateProjetWiki(templatesFolder, model, _wikiVersion);
-            CreateCodeWiki(templatesFolder, model, _wikiVersion);
-
             List<string> listPullRequestJsonPaths = new List<string>();
             string pullRequestFolder = templatesFolder + model.SelectedTemplate + @"\PullRequests";
             if (System.IO.Directory.Exists(pullRequestFolder))
@@ -1374,26 +1370,26 @@ namespace VstsDemoBuilder.Controllers
             ImportWorkItems import = new ImportWorkItems(_workItemsVersion, model.Environment.BoardRowFieldName);
             if (System.IO.File.Exists(projectSettingsFile))
             {
-                string attchmentFilesFolder = string.Format(templatesFolder + @"{0}\WorkItemAttachments", model.SelectedTemplate);
-                if (listPullRequestJsonPaths.Count > 0)
-                {
-                    if (model.SelectedTemplate == "MyHealthClinic")
-                    {
-                        wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, model.Environment.repositoryIdList["MyHealthClinic"], model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
-                    }
-                    else if (model.SelectedTemplate == "SmartHotel360")
-                    {
-                        wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, model.Environment.repositoryIdList["PublicWeb"], model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
-                    }
-                    else
-                    {
-                        wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, model.Environment.repositoryIdList[model.SelectedTemplate], model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
-                    }
-                }
-                else
-                {
-                    wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, string.Empty, model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
-                }
+                //string attchmentFilesFolder = string.Format(templatesFolder + @"{0}\WorkItemAttachments", model.SelectedTemplate);
+                //if (listPullRequestJsonPaths.Count > 0)
+                //{
+                //    if (model.SelectedTemplate == "MyHealthClinic")
+                //    {
+                //        wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, model.Environment.repositoryIdList["MyHealthClinic"], model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
+                //    }
+                //    else if (model.SelectedTemplate == "SmartHotel360")
+                //    {
+                //        wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, model.Environment.repositoryIdList["PublicWeb"], model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
+                //    }
+                //    else
+                //    {
+                //        wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, model.Environment.repositoryIdList[model.SelectedTemplate], model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
+                //    }
+                //}
+                //else
+                //{
+                //    wiMapping = import.ImportWorkitems(workItems, model.ProjectName, model.Environment.UserUniquename, model.ReadJsonFile(projectSettingsFile), attchmentFilesFolder, string.Empty, model.Environment.ProjectId, model.Environment.pullRequests, model.UserMethod, model.accountUsersForWi, model.SelectedTemplate);
+                //}
                 AddMessage(model.id, "Work Items created");
             }
             //Creat TestPlans and TestSuites
@@ -1422,7 +1418,7 @@ namespace VstsDemoBuilder.Controllers
             bool isBuild = CreateBuildDefinition(templatesFolder, model, _buildVersion, model.id);
             if (isBuild)
             {
-                //AddMessage(model.id, "Build definition created");
+                AddMessage(model.id, "Build definition created");
             }
 
             //Queue a Build
@@ -1442,7 +1438,7 @@ namespace VstsDemoBuilder.Controllers
             bool isReleased = CreateReleaseDefinition(templatesFolder, model, _releaseVersion, model.id, teamMembers);
             if (isReleased)
             {
-                //AddMessage(model.id, "Release definition created");
+                AddMessage(model.id, "Release definition created");
             }
 
             //Create query and widgets
@@ -2319,7 +2315,7 @@ namespace VstsDemoBuilder.Controllers
                         //Adding randon UUID to website name
                         string uuid = Guid.NewGuid().ToString();
                         uuid = uuid.Substring(0, 8);
-                        jsonReleaseDefinition = jsonReleaseDefinition.Replace("$UUID$", uuid).Replace("$RandomNumber$", uuid).Replace("$AccountName$", model.accountName); ;
+                        jsonReleaseDefinition = jsonReleaseDefinition.Replace("$UUID$", uuid).Replace("$RandomNumber$", uuid).Replace("$AccountName$", model.accountName);
 
                         foreach (BuildDef objBuildDef in model.BuildDefinitions)
                         {
