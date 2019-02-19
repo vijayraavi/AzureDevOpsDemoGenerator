@@ -24,12 +24,19 @@
                         <img src="~/assets/images/VS_logo.png" alt="" width="60px" class="p-2">
                         Azure DevOps Server Demo Generator
                     </div>
+                    <div>
+                        <marquee direction="right">
+                            <img src="~/assets/images/VS_logo.png" alt="" width="60px" class="p-2">
+
+                            Azure DevOps Server 2019
+                        </marquee>
+                    </div>
                 </div>
 
                 <div class="VSTS-hero-text text-primary p-5" style="position: absolute; bottom: 0;width: 100%;">
                 </div>
             </div>
-            <div class="VSTS-details p-3 d-flex flex-column">
+            <div class="VSTS-details d-flex flex-column">
                 <img class="d-block mx-auto demo-generator-details-logo mt-2 mt-md-5" src="~/assets/images/VSTS_full_logo.png" alt="">
                 <h6 class="h6 text-primary mt-3 text-uppercase text-center"><a href="https://docs.microsoft.com/azure/devops/demo-gen/?view=vsts" target="_blank">Azure DevOps Server Demo Generator</a></h6>
                 <p class="text-center">
@@ -42,11 +49,11 @@
                     <form method="post" action="~/account/verify" id="Verify">
                         <div class="row m-3">
                             <label class="col-sm-4">Server Name :</label>
-                            @Html.TextBoxFor(m => Model.TFSserverName, new { @class = "form-control col-sm-8", @id = "TFSserverName", placeholder = "TFS Server Name or IP Address or Domain name" })
+                            @Html.TextBoxFor(m => Model.TFSserverName, new { @class = "form-control col-sm-8", @id = "TFSserverName", placeholder = "Server Name or IP Address or Domain name" })
                         </div>
                         <div class="row m-3">
                             <label class="col-sm-4">Collection :</label>
-                            @Html.TextBoxFor(m => Model.Collection, new { @class = "form-control col-sm-8", @id = "txtCollection", placeholder = "TFS Collection Name" })
+                            @Html.TextBoxFor(m => Model.Collection, new { @class = "form-control col-sm-8", @id = "txtCollection", placeholder = "Collection Name" })
                         </div>
                         <div class="row m-3">
                             <label class="col-sm-4">Port :</label>
