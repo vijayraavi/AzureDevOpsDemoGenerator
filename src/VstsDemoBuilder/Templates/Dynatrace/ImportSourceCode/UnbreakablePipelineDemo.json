@@ -1,9 +1,0 @@
-{
-  "parameters": {
-    "gitSource": {
-      "url": "https://vstsdemodata.visualstudio.com/Dynatrace/_git/UnbreakablePipelineDemo"
-    },
-    "serviceEndpointId": "$UnbreakablePipelineDemo-code$",
-    "deleteServiceEndpointAfterImportIsDone": true
-  }
-}
