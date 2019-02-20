@@ -412,7 +412,6 @@
     <Content Include="Templates\PartsUnlimited\PullRequests\PullRequest2.json" />
     <Content Include="Templates\PartsUnlimited\Query.json" />
     <Content Include="Templates\PartsUnlimited\ReleaseDefinitions\PartsUnlimitedE2E.json" />
-    <Content Include="Templates\PartsUnlimited\ServiceEndpoints\partsUnlimited-code.json" />
     <Content Include="Templates\PartsUnlimited\TaskfromTemplate.json" />
     <Content Include="Templates\PartsUnlimited\TeamArea.json" />
     <Content Include="Templates\PartsUnlimited\Teams.json" />
