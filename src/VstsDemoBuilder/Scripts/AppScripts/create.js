@@ -718,7 +718,7 @@ function getStatus() {
                                     var tfsUrl = $('#TfsUrl').val();
                                     var accountName = $('#ddlAcccountName').val();
                                     var projectNameForLink = $("#txtProjectName").val();
-                                    var link = tfsUrl + "/" + projectNameForLink;
+                                    var link = tfsUrl + projectNameForLink;
                                     var proceedOrg = "<a href='" + link + "' target='_blank'><button type = 'button' class='btn btn-primary btn-sm' id = 'proceedOrg' style = 'margin: 5px;'> Navigate to project</button></a>";
                                     var social = "<p style='color: black; font-weight: 500; margin: 0px;'>Like the tool? Share your feedback &nbsp;";
                                     social += "<script>function fbs_click() { u = 'https://azuredevopsdemogenerator.azurewebsites.net/'; t = +Azure + DevOps + Demo + Generator & window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436'); return false; }</script>";

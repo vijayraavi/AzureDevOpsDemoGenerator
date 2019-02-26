@@ -2308,7 +2308,7 @@ namespace VstsDemoBuilder.Controllers
                         string jsonReleaseDefinition = model.ReadJsonFile(relDef.FilePath);
                         jsonReleaseDefinition = jsonReleaseDefinition.Replace("$ProjectName$", model.Environment.ProjectName)
                                              .Replace("$ProjectId$", model.Environment.ProjectId)
-                                             .Replace("$OwnerUniqueName$", teamMember.identity.uniqueName)
+                                             .Replace("$OwnerUniqueName$", teamMember.identity.displayName)
                                              .Replace("$OwnerId$", teamMember.identity.id)
                                   .Replace("$OwnerDisplayName$", teamMember.identity.displayName);
 
