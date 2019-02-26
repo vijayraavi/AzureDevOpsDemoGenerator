@@ -620,7 +620,6 @@ function getStatus() {
             if (data === "OAUTHACCESSDENIED") {
                 $('#progressBar').width(currentPercentage++ + '%');
                 $('#status-messages').append('<i class="fas fa-forward"></i> &nbsp;Third Party application access via OAuth is disabled for this Organization,please change OAuth access setting and try again!<br/>');
-                $("#ddlAcccountName").removeAttr("disabled");
                 $("#txtProjectName").removeAttr("disabled");
                 $("#txtProjectName").val("");
                 $('#ddlAcccountName').prop('selectedIndex', 0);
@@ -652,7 +651,6 @@ function getStatus() {
                         if (data.indexOf("TF50309") === 0) {
                             $('#progressBar').width(currentPercentage++ + '%');
                             $('#status-messages').append('<i class="fas fa-check-circle" style="color:green"></i> &nbsp;' + data + '<br/>');
-                            $("#ddlAcccountName").removeAttr("disabled");
                             $("#txtProjectName").removeAttr("disabled");
                             $("#txtProjectName").val("");
                             $('#ddlAcccountName').prop('selectedIndex', 0);
@@ -666,7 +664,6 @@ function getStatus() {
                         else if (data.indexOf("TF200019") === 0) {
                             $('#progressBar').width(currentPercentage++ + '%');
                             $('#status-messages').append('<i class="fas fa-check-circle" style="color:green"></i> &nbsp;' + data + '<br/>');
-                            $("#ddlAcccountName").removeAttr("disabled");
                             $("#txtProjectName").removeAttr("disabled");
                             $("#txtProjectName").val("");
                             $('#ddlAcccountName').prop('selectedIndex', 0);
@@ -684,7 +681,6 @@ function getStatus() {
                         }
                         else {
                             $('#status-messages').append('<i class="fas fa-check-circle" style="color:green"></i> &nbsp;' + data + '<br/>');
-                            $("#ddlAcccountName").removeAttr("disabled");
                             $("#txtProjectName").removeAttr("disabled");
                             $("#txtProjectName").val("");
                             $('#ddlAcccountName').prop('selectedIndex', 0);
@@ -764,7 +760,6 @@ function getStatus() {
                             $("#btnSubmit").prop("disabled", false).addClass('btn-primary');
                             $("#txtProjectName").val("");
 
-                            $('#ddlAcccountName').prop('selectedIndex', 0);
                             $("#templateselection").prop("disabled", false);
                             $('#ddlGroups').removeAttr("disabled");
                             $("#ddlAcccountName").removeAttr("disabled");
