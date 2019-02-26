@@ -126,13 +126,13 @@ namespace VstsDemoBuilder.Controllers
             {
 
                 string _credentials = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", "", model.PAT)));
-                Configuration _inputConfiguration = new Configuration() { UriString = string.Format("http://{0}:{1}/{2}/", model.TFSserverName, model.Port, model.Collection), VersionNumber = "4.1", PersonalAccessToken = model.PAT };
+                Configuration _inputConfiguration = new Configuration() { UriString = string.Format("http://{0}:{1}/tfs/{2}/", model.TFSserverName, model.Port, model.Collection), VersionNumber = "4.1", PersonalAccessToken = model.PAT };
 
                 Projects objProject = new Projects(_inputConfiguration);
                 bool isAccountValid = objProject.IsAccountHasProjects();
                 if (isAccountValid)
                 {
-                    string TFSUriString = string.Format("http://{0}:{1}/{2}/", model.TFSserverName, model.Port, model.Collection);
+                    string TFSUriString = string.Format("http://{0}:{1}/tfs/{2}/", model.TFSserverName, model.Port, model.Collection);
                     Session["TFSUriString"] = TFSUriString;
                     Session["PAT"] = model.PAT;
                     Session["Collection"] = model.Collection;
