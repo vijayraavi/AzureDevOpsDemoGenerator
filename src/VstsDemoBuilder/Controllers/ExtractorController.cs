@@ -34,6 +34,7 @@ namespace VstsDemoBuilder.Controllers
         public List<string> errorMessages = new List<string>();
         private delegate string[] ProcessEnvironment(Project model);
 
+        private List<GetQueries.FinalChild> _listQueries = new List<GetQueries.FinalChild>();
         private ExtractorAnalysis analysis = new ExtractorAnalysis();
 
         private string projectSelectedToExtract = string.Empty;
@@ -1409,6 +1410,7 @@ namespace VstsDemoBuilder.Controllers
                                 {
                                     if (query.wiql != null)
                                     {
+                                        _listQueries.Add(new GetQueries.FinalChild { id = query.id, name = query.name });
                                         query.wiql = query.wiql.Replace(con.Project, "$projectId$");
                                         JObject jobj = new JObject();
                                         jobj["name"] = query.name;
@@ -1435,6 +1437,8 @@ namespace VstsDemoBuilder.Controllers
                                     {
                                         if (child1.wiql != null)
                                         {
+                                            _listQueries.Add(new GetQueries.FinalChild { id = child1.id, name = child1.name });
+
                                             child1.wiql = child1.wiql.Replace(con.Project, "$projectId$");
                                             JObject jobj = new JObject();
                                             jobj["name"] = child1.name;
@@ -1448,6 +1452,28 @@ namespace VstsDemoBuilder.Controllers
                                             else
                                             {
                                                 System.IO.File.WriteAllText(extractedTemplatePath + con.Project + "\\Dashboard\\Queries\\" + child1.name + ".json", JsonConvert.SerializeObject(jobj, Formatting.Indented));
+                                            }
+                                        }
+                                        if (child1.hasChildren)
+                                        {
+                                            foreach (var child2 in child1.children)
+                                            {
+                                                _listQueries.Add(new GetQueries.FinalChild { id = child2.id, name = child2.name });
+
+                                                child2.wiql = child2.wiql.Replace(con.Project, "$projectId$");
+                                                JObject jobj = new JObject();
+                                                jobj["name"] = child2.name;
+                                                jobj["wiql"] = child2.wiql;
+                                                if (!Directory.Exists(extractedTemplatePath + con.Project + "\\Dashboard\\Queries"))
+                                                {
+                                                    Directory.CreateDirectory(extractedTemplatePath + con.Project + "\\Dashboard\\Queries");
+
+                                                    System.IO.File.WriteAllText(extractedTemplatePath + con.Project + "\\Dashboard\\Queries\\" + child2.name + ".json", JsonConvert.SerializeObject(jobj, Formatting.Indented));
+                                                }
+                                                else
+                                                {
+                                                    System.IO.File.WriteAllText(extractedTemplatePath + con.Project + "\\Dashboard\\Queries\\" + child2.name + ".json", JsonConvert.SerializeObject(jobj, Formatting.Indented));
+                                                }
                                             }
                                         }
                                     }
@@ -1658,6 +1684,11 @@ namespace VstsDemoBuilder.Controllers
             }
             ViewBag.Error = "File not found";
             return RedirectToAction("Index", "Extractor");
+        }
+
+        public void ExportDashboard()
+        {
+
         }
     }
 }

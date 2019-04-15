@@ -5,13 +5,30 @@ namespace VstsRestAPI.Viewmodel.Extractor
 {
     public class GetQueries
     {
+        public class FinalChild
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+        }
+        public class Child2
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+            public bool hasChildren { get; set; }
+            public string path { get; set; }
+            public string wiql { get; set; }
+            public bool isFolder { get; set; }
+        }
+
         public class Child1
         {
             public string id { get; set; }
             public string name { get; set; }
+            public bool hasChildren { get; set; }
             public string path { get; set; }
             public string wiql { get; set; }
             public bool isPublic { get; set; }
+            public List<Child2> children { get; set; }
         }
 
         public class Child

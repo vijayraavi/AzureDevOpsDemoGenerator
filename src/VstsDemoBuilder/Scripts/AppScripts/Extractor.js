@@ -9,16 +9,9 @@ var ErrorData = '';
 var statusCount = 0;
 var messageList = [];
 var currentPercentage = 0;
-var finalprojectName = "";
 
 $(document).ready(function () {
     $('#Analyse').removeClass('btn-primary').attr('disabled', 'disabled');
-
-    window.onbeforeunload = WindowCloseHanlder;
-    function WindowCloseHanlder() {
-        var fso = new ActiveXObject('Scripting.FileSystemObject');
-        return fso.DeleteFile("../ExtractedTemplate/" + finalprojectName + ".zip", true);
-    }
 
     uniqueId = ID();
     $('.rmverror').click(function () {
@@ -297,6 +290,9 @@ $(document).ready(function () {
         });
     });
 
+    $('#fileDownload').click(function () {
+
+    });
 });
 
 function getStatus() {
