@@ -1802,7 +1802,8 @@ select {
     }
 
     .navbar {
-        height: 100px !important;
+        height: auto !important;
+        padding: 10px 16px !important;
     }
 
     .navbar-brand {
@@ -9783,6 +9784,35 @@ img#projectloader {
 
 .rd-4.Diagno_btn { width:100%
 }
+
+
+@media (max-width: 767.98px) {
+    .template-dialog-title {
+        padding: 12px 0;
+    }
+.template_tab {
+        display: block;
+    }
+    .template_tab li {
+        border-radius: 10px;
+        float: left;
+        padding: 6px 10px;
+        margin: 2px;
+    }
+    .nav-item:last-child a:after, .nav-item.active_white a:before, .nav-item:last-child::after, .nav-item.active_white:before, .nav-item:first-child a:before, .nav-item.active_white a:after, .nav-item.active_white:after {
+        display: none;
+    }
+    .template_tab li {
+        background: none;
+        box-shadow: none;
+    }
+    .nav-item.active_white a, .template_tab li a {
+        font-size: 13px;
+        padding:0;
+    }
+}
+
+
 @media only screen and (min-width: 1500px) {
     .container {
         max-width: 1350px;
